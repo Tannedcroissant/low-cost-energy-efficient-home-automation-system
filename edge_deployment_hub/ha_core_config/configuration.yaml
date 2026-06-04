@@ -1,0 +1,71 @@
+default_config:
+
+frontend:
+  themes: !include_dir_merge_named themes
+
+automation: !include automations.yaml
+script: !include scripts.yaml
+scene: !include scenes.yaml
+
+mqtt:
+  sensor:
+    - name: "Outdoor Temperature"
+      state_topic: "smart_home/sensors/outdoor_temp"
+      unit_of_measurement: "°C"
+    - name: "Solar Irradiance"
+      state_topic: "smart_home/sensors/solar_irradiance"
+      unit_of_measurement: "W/m²"
+    - name: "Grid Price"
+      state_topic: "smart_home/sensors/grid_price"
+      unit_of_measurement: "$/kWh"
+    - name: "Occupancy Status"
+      state_topic: "smart_home/sensors/occupancy"
+    - name: "Indoor Temperature"
+      state_topic: "smart_home/sensors/indoor_temp"
+      unit_of_measurement: "°C"
+    - name: "CO2 Level"
+      state_topic: "smart_home/sensors/co2_level"
+      unit_of_measurement: "ppm"
+
+input_boolean:
+  virtual_fan:
+    name: "Virtual Fan"
+    icon: mdi:fan
+  virtual_living_room_shade_state:
+    name: "Living Room Shade Internal State"
+    initial: off
+  virtual_hvac_power:
+    name: "Virtual HVAC Power Relay"
+    initial: off
+
+
+cover:
+  - platform: template
+    covers:
+      living_room_shades:
+        device_class: shade
+        friendly_name: "Living Room Solar Shades"
+        value_template: >-
+          {{ states('input_boolean.virtual_living_room_shade_state') == 'on' }}
+        open_cover:
+          service: input_boolean.turn_off
+          target:
+            entity_id: input_boolean.virtual_living_room_shade_state
+        close_cover:
+          service: input_boolean.turn_on
+          target:
+            entity_id: input_boolean.virtual_living_room_shade_state
+        stop_cover:
+          service: homeassistant.update_entity
+          target:
+            entity_id: cover.living_room_shades
+
+climate:
+  - platform: generic_thermostat
+    name: "Living Room AC"
+    heater: input_boolean.virtual_hvac_power
+    target_sensor: sensor.indoor_temperature 
+    min_temp: 16
+    max_temp: 30
+    ac_mode: true
+    target_temp: 22
