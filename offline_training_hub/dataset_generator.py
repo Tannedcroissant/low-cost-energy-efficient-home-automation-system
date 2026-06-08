@@ -1,3 +1,12 @@
+"""
+This script generates a lightweight, SYNTHETIC dummy dataset. 
+It is provided solely to allow reviewers to test the execution of the 
+machine learning pipeline (1D-DCNN, BLSTM, DQN) and Home Assistant 
+integration without needing to download the huge UK-DALE .h5 dataset.
+
+The actual model weights (.pth) provided in this repository were trained 
+on the genuine UK-DALE corpus offline.
+"""
 import pandas as pd
 import numpy as np
 

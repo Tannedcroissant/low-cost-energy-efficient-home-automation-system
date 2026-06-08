@@ -48,7 +48,7 @@ def create_sliding_windows(data, window_size=288):
     return np.array(X), np.array(y)
 
 
-def train_model(csv_path="/Users/apple/smart_home_thesis/thesis_master_dataset.csv"):
+def train_model(csv_path="./thesis_master_dataset.csv"):
     print("📊 Loading dataset for Load Forecasting...")
     df = pd.read_csv(csv_path)
     if 'energy_load' not in df.columns:

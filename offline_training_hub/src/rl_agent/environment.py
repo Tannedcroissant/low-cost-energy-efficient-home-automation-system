@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 
 class SmartHomeEnv(gym.Env):
-    def __init__(self, dataset_path="/Users/apple/smart_home_thesis/thesis_master_dataset.csv"):
+    def __init__(self, dataset_path="./thesis_master_dataset.csv"):
         super(SmartHomeEnv, self).__init__()
         
         

@@ -9,7 +9,7 @@ MQTT_USER = "agent_user"
 MQTT_PASS = "123456"
 
 class ThesisDataReplayer:
-    def __init__(self, csv_path="/Users/apple/smart_home_thesis/thesis_master_dataset.csv"):
+    def __init__(self, csv_path="./thesis_master_dataset.csv"):
         
         self.indoor_temp = 24.0
         self.co2_level = 400.0 
